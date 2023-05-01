@@ -23,10 +23,9 @@ def fetchDataFromDB():
     df = None
     try:
         dbConnection = psycopg2.connect(
-            user = "dap",
-            password = "dap",
-            host = "127.0.0.1",
-            port = "5432",
+            user = "airflow",
+            password = "airflow",
+            host = "postgres",
             database = "ChicagoCrime")
         df = sqlio.read_sql_query(selectQuery, dbConnection)
         print("Fetched data successfully..")
@@ -71,10 +70,9 @@ def createTable():
         dropTable("ChicagoCrime_Final")
     try:
         dbConnection = psycopg2.connect(
-            user = "dap",
-            password = "dap",
-            host = "127.0.0.1",
-            port = "5432",
+            user = "airflow",
+            password = "airflow",
+            host = "postgres",
             database = "ChicagoCrime")
         dbConnection.set_isolation_level(0) # AUTOCOMMIT
         dbCursor = dbConnection.cursor()
@@ -97,10 +95,9 @@ def insertDataToNewTable():
     insertQuery = "INSERT INTO %s(%s) VALUES %%s" % ("ChicagoCrime_Final", cols)
     try:
         dbConnection = psycopg2.connect(
-            user = "dap",
-            password = "dap",
-            host = "127.0.0.1",
-            port = "5432",
+            user = "airflow",
+            password = "airflow",
+            host = "postgres",
             database = "ChicagoCrime")
         dbConnection.set_isolation_level(0) # AUTOCOMMIT
         dbCursor = dbConnection.cursor()
@@ -114,4 +111,5 @@ def insertDataToNewTable():
         if dbConnection in locals(): 
             dbConnection.close()
 
-#insertDataToNewTable()
+if __name__ == "__main__":
+    insertDataToNewTable()

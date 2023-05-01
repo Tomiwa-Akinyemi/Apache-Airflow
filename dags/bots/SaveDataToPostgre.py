@@ -14,12 +14,12 @@ import psycopg2.extras as extras
 
 def checkIfTableExists(tableName):
     isExist = True
+    print("Checking if table exist")
     try:
         dbConnection = psycopg2.connect(
-            user = "dap",
-            password = "dap",
-            host = "127.0.0.1",
-            port = "5432",
+            user = "airflow",
+            password = "airflow",
+            host = "postgres",
             database = "ChicagoCrime")
         dbConnection.set_isolation_level(0) # AUTOCOMMIT
         dbCursor = dbConnection.cursor()
@@ -36,10 +36,9 @@ def checkIfTableExists(tableName):
 def dropTable(tableName):
     try:
         dbConnection = psycopg2.connect(
-            user = "dap",
-            password = "dap",
-            host = "127.0.0.1",
-            port = "5432",
+            user = "airflow",
+            password = "airflow",
+            host = "postgres",
             database = "ChicagoCrime")
         dbConnection.set_isolation_level(0) # AUTOCOMMIT
         dbCursor = dbConnection.cursor()
@@ -83,12 +82,12 @@ def createTable():
     if(checkIfTableExists("ChicagoCrime_Staging")):
         #drop table
         dropTable("ChicagoCrime_Staging")
+    print("About to create table")
     try:
         dbConnection = psycopg2.connect(
-            user = "dap",
-            password = "dap",
-            host = "127.0.0.1",
-            port = "5432",
+            user = "airflow",
+            password = "airflow",
+            host = "postgres",
             database = "ChicagoCrime")
         dbConnection.set_isolation_level(0) # AUTOCOMMIT
         dbCursor = dbConnection.cursor()
@@ -111,10 +110,9 @@ def insertDataToTable():
     insertQuery = "INSERT INTO %s(%s) VALUES %%s" % ("ChicagoCrime_Staging", cols)
     try:
         dbConnection = psycopg2.connect(
-            user = "dap",
-            password = "dap",
-            host = "127.0.0.1",
-            port = "5432",
+            user = "airflow",
+            password = "airflow",
+            host = "postgres",
             database = "ChicagoCrime")
         dbConnection.set_isolation_level(0) # AUTOCOMMIT
         dbCursor = dbConnection.cursor()
@@ -129,4 +127,5 @@ def insertDataToTable():
             dbConnection.close()
 
 
-#insertDataToTable()
+if __name__ == "__main__":
+    insertDataToTable()
