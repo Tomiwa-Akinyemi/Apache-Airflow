@@ -1,7 +1,4 @@
-# Easy way is to hardcode the table column and stuff
-# Hard way is to get the column from the mongo dataframe and use that to create your table.... 
-
-
+#create table here
 #basically we will call the other class to return mongo data, extract the columns and create a table using SQL script, then we loop through and save the data into postgre....
 
 from FetchDataFromMongo import getMongoData

@@ -38,9 +38,7 @@ def fetchDataFromDB():
 
 def preProcessData():
     retrievedData = fetchDataFromDB()
-    #now we remove columns and the likes....
-    #print(retrievedData.isnull())
-    #no null data
+    #now we remove columns and drop duplicates on the case number column
     retrievedData.drop_duplicates(subset="casenumber",keep='first', inplace=True)
     #drop unneccesary columns
     retrievedData.drop(['updatedon', 'location', 'locationdescription', 'beat', 'fbicode', 'year', 'ward', 'district', 'xcoordinate', 'ycoordinate'], axis=1, inplace=True)
